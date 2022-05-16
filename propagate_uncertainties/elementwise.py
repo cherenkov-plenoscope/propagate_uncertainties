@@ -25,23 +25,21 @@ def au(dfdx, x_au):
     return np.sqrt(S)
 
 
-def multiply(x, x_au):
+def multiply(x):
     """
     Multilpy all elements in x
 
     Parameters
     ----------
-    x : array of floats
-        Values to be multiplied
-    x_au : array of floats
-        Uncertainties of values x.
+    x : tuple(array of floats, array of floats)
+        Values and absolute uncertainties of x
 
     Returns
     -------
     Product and abs. uncertainty : tuple(float, float)
     """
-    x = np.array(x)
-    x_au = np.array(x_au)
+    x_au = np.array(x[1])
+    x = np.array(x[0])
     assert len(x) == len(x_au)
     P = np.prod(x)
     dfdxs = []
@@ -55,23 +53,21 @@ def multiply(x, x_au):
     return P, Pau
 
 
-def add(x, x_au):
+def add(x):
     """
     Add all elements in x
 
     Parameters
     ----------
-    x : array of floats
-        Values to be added up
-    x_au : array of floats
-        Uncertainties of values x.
+    x : tuple(array of floats, array of floats)
+        Values and absolute uncertainties of x
 
     Returns
     -------
     Sum and abs. uncertainty : tuple(float, float)
     """
-    x = np.array(x)
-    x_au = np.array(x_au)
+    x_au = np.array(x[1])
+    x = np.array(x[0])
     assert len(x) == len(x_au)
     S = np.sum(x)
     dfdxs = np.ones(len(x))
