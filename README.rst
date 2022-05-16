@@ -3,6 +3,13 @@ Propagate Uncertainties
 |BlackStyle|
 
 Propagate the uncertainties of your variables in simple expressions.
+Both value and absolute uncertainty of a variable are stored in a ``tuple()``.
+
+.. code:: python
+
+    C_value = 42.0
+    C_absolute_uncertainty = 1.337
+    C = tuple(C_value, C_absolute_uncertainty)
 
 
 Example, division
