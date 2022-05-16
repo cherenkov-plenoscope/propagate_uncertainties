@@ -1,11 +1,34 @@
 import numpy as np
-from . import elementwise
 
 
-def au(x_au, dfdx, y_au, dfdy):
+def auN(dfdx, x_au):
     """
-    Estimate the absolute uncertainty of function f(x,y), assuming x and y
-    are not correlated.
+    Absolute uncertainty of function f(x1, x2, ..., xN), assuming the
+    N parameters x1 to xN are not correlated.
+
+    Parameters
+    ----------
+    dfdx : array of floats, length N
+        Derivatives of f w.r.t. x1 to xN.
+    x_au : array of floats, length N
+        Absolute uncertainties of x1 to xN.
+    Returns
+    -------
+    Absolute uncertainty : float
+    """
+    dfdx = np.array(dfdx)
+    x_au = np.array(x_au)
+    assert len(dfdx) == len(x_au)
+    S = 0.0
+    for i in range(len(x_au)):
+        S += (dfdx[i] * x_au[i]) ** 2.0
+    return np.sqrt(S)
+
+
+def au2(x_au, dfdx, y_au, dfdy):
+    """
+    Estimate the absolute uncertainty of function f(x,y), assuming the
+    two parameters x and y are not correlated.
 
     Parameters
     ----------
@@ -22,7 +45,7 @@ def au(x_au, dfdx, y_au, dfdy):
     -------
     Absolute uncertainty : float
     """
-    return np.sqrt((dfdx * x_au) ** 2 + (dfdy * y_au) ** 2)
+    return auN(dfdx=[dfdx, dfdy], x_au=[x_au, y_au])
 
 
 def add(x, y):
@@ -46,7 +69,7 @@ def add(x, y):
     df/dx = 1
     df/dy = 1
     """
-    return x[0] + y[0], au(x_au=x[1], dfdx=1.0, y_au=y[1], dfdy=1.0)
+    return x[0] + y[0], au2(x_au=x[1], dfdx=1.0, y_au=y[1], dfdy=1.0)
 
 
 def multiply(x, y):
@@ -70,7 +93,7 @@ def multiply(x, y):
     df/dx = y
     df/dy = x
     """
-    return x[0] * y[0], au(x_au=x[1], dfdx=y[0], y_au=y[1], dfdy=x[0])
+    return x[0] * y[0], au2(x_au=x[1], dfdx=y[0], y_au=y[1], dfdy=x[0])
 
 
 def divide(x, y):
@@ -96,8 +119,58 @@ def divide(x, y):
     """
     return (
         x[0] / y[0],
-        au(x_au=x[1], dfdx=1.0 / y[0], y_au=y[1], dfdy=(-1 * x[0] * y[0] ** (-2))),
+        au2(x_au=x[1], dfdx=1.0 / y[0], y_au=y[1], dfdy=(-1 * x[0] * y[0] ** (-2))),
     )
+
+
+def prod(x):
+    """
+    Multilpy all elements in x
+
+    Parameters
+    ----------
+    x : tuple(array of floats, array of floats)
+        Values and absolute uncertainties of x
+
+    Returns
+    -------
+    Product and abs. uncertainty : tuple(float, float)
+    """
+    x_au = np.array(x[1])
+    x = np.array(x[0])
+    assert len(x) == len(x_au)
+    P = np.prod(x)
+    dfdxs = []
+    for i in range(len(x)):
+        mask_i = np.ones(len(x), dtype=np.bool)
+        mask_i[i] = False
+        dfdxi = np.prod(x[mask_i])
+        dfdxs.append(dfdxi)
+
+    Pau = auN(dfdx=dfdxs, x_au=x_au)
+    return P, Pau
+
+
+def sum(x):
+    """
+    Add all elements in x
+
+    Parameters
+    ----------
+    x : tuple(array of floats, array of floats)
+        Values and absolute uncertainties of x
+
+    Returns
+    -------
+    Sum and abs. uncertainty : tuple(float, float)
+    """
+    x_au = np.array(x[1])
+    x = np.array(x[0])
+    assert len(x) == len(x_au)
+    S = np.sum(x)
+    dfdxs = np.ones(len(x))
+    S_au = auN(dfdx=dfdxs, x_au=x_au)
+    return S, S_au
 
 
 def integrate(f, x_bin_edges):
@@ -127,4 +200,4 @@ def integrate(f, x_bin_edges):
         step = x_bin_edges[i + 1] - x_bin_edges[i]
         assert step >= 0.0
         a[i], a_au[i] = multiply(x=(f[i], f_au[i]), y=(step, 0.0))
-    return elementwise.add((a, a_au))
+    return sum((a, a_au))

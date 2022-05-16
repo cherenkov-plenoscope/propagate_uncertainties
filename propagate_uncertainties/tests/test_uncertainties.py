@@ -94,7 +94,7 @@ def test_integrate_zero_1():
 
 
 def test_elementwise_add_zero_au():
-    s, s_au = propau.elementwise.add(x=([1, 1], [0, 0]))
+    s, s_au = propau.sum(x=([1, 1], [0, 0]))
     assert s == 2
     assert s_au == 0
 
@@ -104,14 +104,14 @@ def test_elementwise_add_1():
     b = 2
     a_au = 0.2
     b_au = 0.55
-    s1, s_au1 = propau.elementwise.add(x=([a, b], [a_au, b_au]))
+    s1, s_au1 = propau.sum(x=([a, b], [a_au, b_au]))
     s2, s_au2 = propau.add(x=(a, a_au), y=(b, b_au))
     assert s1 == s2
     assert s_au1 == s_au2
 
 
 def test_elementwise_multiply_zero_au():
-    s, s_au = propau.elementwise.multiply(x=([1, 1], [0, 0]))
+    s, s_au = propau.prod(x=([1, 1], [0, 0]))
     assert s == 1
     assert s_au == 0
 
@@ -121,7 +121,7 @@ def test_elementwise_multiply_1():
     b = 2
     a_au = 0.2
     b_au = 0.55
-    s1, s_au1 = propau.elementwise.multiply(x=([a, b], [a_au, b_au]))
+    s1, s_au1 = propau.prod(x=([a, b], [a_au, b_au]))
     s2, s_au2 = propau.multiply(x=(a, a_au), y=(b, b_au))
     assert s1 == s2
     assert s_au1 == s_au2
