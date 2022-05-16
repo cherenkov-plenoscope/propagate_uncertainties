@@ -1,83 +1,81 @@
-import propagate_uncertainties as propau
+import propagate_uncertainties as pru
 import numpy as np
 
 
 def test_add_zero_au():
-    s, s_au = propau.add(x=(1, 0), y=(1, 0))
+    s, s_au = pru.add(x=(1, 0), y=(1, 0))
     assert s == 2
     assert s_au == 0
 
 
 def test_add_1():
-    s, s_au = propau.add(x=(1, 1), y=(1, 1))
+    s, s_au = pru.add(x=(1, 1), y=(1, 1))
     assert s == 2
     assert s_au == np.sqrt(2)
 
 
 def test_add_2():
-    s, s_au = propau.add(x=(1, 1), y=(1, 0))
+    s, s_au = pru.add(x=(1, 1), y=(1, 0))
     assert s == 2
     assert s_au == 1
 
 
 def test_add_3():
-    s, s_au = propau.add(x=(0, 1), y=(0, 1))
+    s, s_au = pru.add(x=(0, 1), y=(0, 1))
     assert s == 0
     assert s_au == np.sqrt(2)
 
 
 def test_multiply_zero_au():
-    s, s_au = propau.multiply(x=(1, 0), y=(1, 0))
+    s, s_au = pru.multiply(x=(1, 0), y=(1, 0))
     assert s == 1
     assert s_au == 0
 
 
 def test_multiply_1():
-    s, s_au = propau.multiply(x=(0, 1), y=(0, 1))
+    s, s_au = pru.multiply(x=(0, 1), y=(0, 1))
     assert s == 0
     assert s_au == 0
 
 
 def test_multiply_2():
-    s, s_au = propau.multiply(x=(1, 1), y=(1, 1))
+    s, s_au = pru.multiply(x=(1, 1), y=(1, 1))
     assert s == 1
     assert s_au == np.sqrt(2)
 
 
 def test_multiply_3():
-    s, s_au = propau.multiply(x=(1, 2), y=(1, 2))
+    s, s_au = pru.multiply(x=(1, 2), y=(1, 2))
     assert s == 1
     assert s_au == 2 * np.sqrt(2)
 
 
 def test_multiply_4():
-    s, s_au = propau.multiply(x=(1, 1), y=(10, 1))
+    s, s_au = pru.multiply(x=(1, 1), y=(10, 1))
     assert s == 10
     assert s_au == np.sqrt(1 ** 2 + 10 ** 2)
 
 
 def test_devide_zero_au():
-    s, s_au = propau.divide(x=(1, 0), y=(1, 0))
+    s, s_au = pru.divide(x=(1, 0), y=(1, 0))
     assert s == 1
     assert s_au == 0
 
 
 def test_devide_1():
-    s, s_au = propau.divide(x=(1, 0), y=(2, 0))
+    s, s_au = pru.divide(x=(1, 0), y=(2, 0))
     assert s == 0.5
     assert s_au == 0
 
 
 def test_devide_2():
-    s, s_au = propau.divide(x=(7, 1), y=(2, 1))
+    s, s_au = pru.divide(x=(7, 1), y=(2, 1))
     assert s == 3.5
     assert s_au == np.sqrt((1 / 2) ** 2 + (7 / 2 ** 2) ** 2)
 
 
 def test_integrate_zero_au():
-    s, s_au = propau.integrate(
-        f=([1, 1, 1], [0, 0, 0]), x_bin_edges=[0, 1, 2, 3]
-    )
+    s, s_au = pru.integrate(f=([1, 1, 1], [0, 0, 0]), x_bin_edges=[0, 1, 2, 3])
     assert s == 3
     assert s_au == 0
 
@@ -86,15 +84,13 @@ def test_integrate_zero_1():
     a = 0.1
     b = 0.2
     c = 0.3
-    s, s_au = propau.integrate(
-        f=([1, 1, 1], [a, b, c]), x_bin_edges=[0, 1, 2, 3]
-    )
+    s, s_au = pru.integrate(f=([1, 1, 1], [a, b, c]), x_bin_edges=[0, 1, 2, 3])
     assert s == 3
     assert s_au == np.sqrt(a ** 2 + b ** 2 + c ** 2)
 
 
 def test_elementwise_add_zero_au():
-    s, s_au = propau.sum(x=([1, 1], [0, 0]))
+    s, s_au = pru.sum(x=([1, 1], [0, 0]))
     assert s == 2
     assert s_au == 0
 
@@ -104,14 +100,14 @@ def test_elementwise_add_1():
     b = 2
     a_au = 0.2
     b_au = 0.55
-    s1, s_au1 = propau.sum(x=([a, b], [a_au, b_au]))
-    s2, s_au2 = propau.add(x=(a, a_au), y=(b, b_au))
+    s1, s_au1 = pru.sum(x=([a, b], [a_au, b_au]))
+    s2, s_au2 = pru.add(x=(a, a_au), y=(b, b_au))
     assert s1 == s2
     assert s_au1 == s_au2
 
 
 def test_elementwise_multiply_zero_au():
-    s, s_au = propau.prod(x=([1, 1], [0, 0]))
+    s, s_au = pru.prod(x=([1, 1], [0, 0]))
     assert s == 1
     assert s_au == 0
 
@@ -121,7 +117,7 @@ def test_elementwise_multiply_1():
     b = 2
     a_au = 0.2
     b_au = 0.55
-    s1, s_au1 = propau.prod(x=([a, b], [a_au, b_au]))
-    s2, s_au2 = propau.multiply(x=(a, a_au), y=(b, b_au))
+    s1, s_au1 = pru.prod(x=([a, b], [a_au, b_au]))
+    s2, s_au2 = pru.multiply(x=(a, a_au), y=(b, b_au))
     assert s1 == s2
     assert s_au1 == s_au2
