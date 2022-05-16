@@ -11,7 +11,8 @@ Example, division
 
     import propagate_uncertainties as pru
 
-    C, C_au = pru.divide(x(5.0, 0.3), y=(2.0, 1.0))
+    pru.divide(x=(5.0, 1.0), y=(2.0, 0.1))
+    (2.5, 0.5153882032022076)
 
 
 .. |BlackStyle| image:: https://img.shields.io/badge/code%20style-black-000000.svg

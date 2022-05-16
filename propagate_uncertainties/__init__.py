@@ -119,7 +119,12 @@ def divide(x, y):
     """
     return (
         x[0] / y[0],
-        au2(x_au=x[1], dfdx=1.0 / y[0], y_au=y[1], dfdy=(-1 * x[0] * y[0] ** (-2))),
+        au2(
+            x_au=x[1],
+            dfdx=1.0 / y[0],
+            y_au=y[1],
+            dfdy=(-1 * x[0] * y[0] ** (-2)),
+        ),
     )
 
 
