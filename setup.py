@@ -4,7 +4,7 @@ with open("README.rst", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="propagate_uncertainties",
+    name="propagate_uncertainties_sebastian-achim-mueller",
     version="0.1.0",
     description="Propagate the uncertainty of multiple values",
     long_description=long_description,
