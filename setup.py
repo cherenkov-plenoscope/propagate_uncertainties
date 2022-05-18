@@ -5,7 +5,7 @@ with open("README.rst", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="propagate_uncertainties_sebastian-achim-mueller",
-    version="0.1.0",
+    version="0.1.1",
     description="Propagate the uncertainty of multiple values",
     long_description=long_description,
     long_description_content_type="text/x-rst",
