@@ -104,16 +104,20 @@ def multiply(x, x_au, y, y_au):
     return x * y, au2(x_au=x_au, dfdx=y, y_au=y_au, dfdy=x)
 
 
-def divide(x, y):
+def divide(x, x_au, y, y_au):
     """
     Divide x by y.
 
     Parameters
     ----------
-    x : tubple(float, float)
-        Value and absolute uncertainty of x
-    y : tubple(float, float)
-        Value and absolute uncertainty of y
+    x : float
+        Value of x.
+    x_au : float
+        Absolute uncertainty of x.
+    y : float
+        Value of y.
+    y_au : float
+        Absolute uncertainty of y.
 
     Returns
     -------
@@ -126,12 +130,12 @@ def divide(x, y):
     df/dy = -1x * y^{-2}
     """
     return (
-        x[0] / y[0],
+        x / y,
         au2(
-            x_au=x[1],
-            dfdx=1.0 / y[0],
-            y_au=y[1],
-            dfdy=(-1 * x[0] * y[0] ** (-2)),
+            x_au=x_au,
+            dfdx=1.0 / y,
+            y_au=y_au,
+            dfdy=(-1 * x * y ** (-2)),
         ),
     )
 

@@ -57,19 +57,19 @@ def test_multiply_4():
 
 
 def test_devide_zero_au():
-    s, s_au = pru.divide(x=(1, 0), y=(1, 0))
+    s, s_au = pru.divide(x=1, x_au=0, y=1, y_au=0)
     assert s == 1
     assert s_au == 0
 
 
 def test_devide_1():
-    s, s_au = pru.divide(x=(1, 0), y=(2, 0))
+    s, s_au = pru.divide(x=1, x_au=0, y=2, y_au=0)
     assert s == 0.5
     assert s_au == 0
 
 
 def test_devide_2():
-    s, s_au = pru.divide(x=(7, 1), y=(2, 1))
+    s, s_au = pru.divide(x=7, x_au=1, y=2, y_au=1)
     assert s == 3.5
     assert s_au == np.sqrt((1 / 2) ** 2 + (7 / 2 ** 2) ** 2)
 
