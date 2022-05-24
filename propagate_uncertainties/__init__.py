@@ -76,16 +76,20 @@ def add(x, x_au, y, y_au):
     return x + y, au2(x_au=x_au, dfdx=1.0, y_au=y_au, dfdy=1.0)
 
 
-def multiply(x, y):
+def multiply(x, x_au, y, y_au):
     """
     Multiply x by y.
 
     Parameters
     ----------
-    x : tubple(float, float)
-        Value and absolute uncertainty of x
-    y : tubple(float, float)
-        Value and absolute uncertainty of y
+    x : float
+        Value of x.
+    x_au : float
+        Absolute uncertainty of x.
+    y : float
+        Value of y.
+    y_au : float
+        Absolute uncertainty of y.
 
     Returns
     -------
@@ -97,7 +101,7 @@ def multiply(x, y):
     df/dx = y
     df/dy = x
     """
-    return x[0] * y[0], au2(x_au=x[1], dfdx=y[0], y_au=y[1], dfdy=x[0])
+    return x * y, au2(x_au=x_au, dfdx=y, y_au=y_au, dfdy=x)
 
 
 def divide(x, y):
@@ -208,5 +212,5 @@ def integrate(f, x_bin_edges):
     for i in range(num_bins):
         step = x_bin_edges[i + 1] - x_bin_edges[i]
         assert step >= 0.0
-        a[i], a_au[i] = multiply(x=(f[i], f_au[i]), y=(step, 0.0))
+        a[i], a_au[i] = multiply(x=f[i], x_au=f_au[i], y=step, y_au=0.0)
     return sum((a, a_au))
