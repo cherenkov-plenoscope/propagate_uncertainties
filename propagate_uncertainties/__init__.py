@@ -48,16 +48,20 @@ def au2(x_au, dfdx, y_au, dfdy):
     return auN(dfdx=[dfdx, dfdy], x_au=[x_au, y_au])
 
 
-def add(x, y):
+def add(x, x_au, y, y_au):
     """
     Add x to y.
 
     Parameters
     ----------
-    x : tubple(float, float)
-        Value and absolute uncertainty of x
-    y : tubple(float, float)
-        Value and absolute uncertainty of y
+    x : float
+        Value of x.
+    x_au : float
+        Absolute uncertainty of x.
+    y : float
+        Value of y.
+    y_au : float
+        Absolute uncertainty of y.
 
     Returns
     -------
@@ -69,7 +73,7 @@ def add(x, y):
     df/dx = 1
     df/dy = 1
     """
-    return x[0] + y[0], au2(x_au=x[1], dfdx=1.0, y_au=y[1], dfdy=1.0)
+    return x + y, au2(x_au=x_au, dfdx=1.0, y_au=y_au, dfdy=1.0)
 
 
 def multiply(x, y):

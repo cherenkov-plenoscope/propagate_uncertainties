@@ -3,25 +3,25 @@ import numpy as np
 
 
 def test_add_zero_au():
-    s, s_au = pru.add(x=(1, 0), y=(1, 0))
+    s, s_au = pru.add(x=1, x_au=0, y=1, y_au=0)
     assert s == 2
     assert s_au == 0
 
 
 def test_add_1():
-    s, s_au = pru.add(x=(1, 1), y=(1, 1))
+    s, s_au = pru.add(x=1, x_au=1, y=1, y_au=1)
     assert s == 2
     assert s_au == np.sqrt(2)
 
 
 def test_add_2():
-    s, s_au = pru.add(x=(1, 1), y=(1, 0))
+    s, s_au = pru.add(x=1, x_au=1, y=1, y_au=0)
     assert s == 2
     assert s_au == 1
 
 
 def test_add_3():
-    s, s_au = pru.add(x=(0, 1), y=(0, 1))
+    s, s_au = pru.add(x=0, x_au=1, y=0, y_au=1)
     assert s == 0
     assert s_au == np.sqrt(2)
 
@@ -101,7 +101,7 @@ def test_elementwise_add_1():
     a_au = 0.2
     b_au = 0.55
     s1, s_au1 = pru.sum(x=([a, b], [a_au, b_au]))
-    s2, s_au2 = pru.add(x=(a, a_au), y=(b, b_au))
+    s2, s_au2 = pru.add(x=a, x_au=a_au, y=b, y_au=b_au)
     assert s1 == s2
     assert s_au1 == s_au2
 
