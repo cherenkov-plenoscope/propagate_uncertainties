@@ -140,21 +140,23 @@ def divide(x, x_au, y, y_au):
     )
 
 
-def prod(x):
+def prod(x, x_au):
     """
     Multilpy all elements in x
 
     Parameters
     ----------
-    x : tuple(array of floats, array of floats)
-        Values and absolute uncertainties of x
+    x : array of N floats
+        Values x.
+    x_au : array of N floats
+        Absolute uncertainties of x.
 
     Returns
     -------
     Product and abs. uncertainty : tuple(float, float)
     """
-    x_au = np.array(x[1])
-    x = np.array(x[0])
+    x = np.array(x)
+    x_au = np.array(x_au)
     assert len(x) == len(x_au)
     P = np.prod(x)
     dfdxs = []

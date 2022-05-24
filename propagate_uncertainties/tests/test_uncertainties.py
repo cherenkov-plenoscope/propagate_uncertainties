@@ -107,7 +107,7 @@ def test_elementwise_add_1():
 
 
 def test_elementwise_multiply_zero_au():
-    s, s_au = pru.prod(x=([1, 1], [0, 0]))
+    s, s_au = pru.prod(x=[1, 1], x_au=[0, 0])
     assert s == 1
     assert s_au == 0
 
@@ -117,7 +117,7 @@ def test_elementwise_multiply_1():
     b = 2
     a_au = 0.2
     b_au = 0.55
-    s1, s_au1 = pru.prod(x=([a, b], [a_au, b_au]))
+    s1, s_au1 = pru.prod(x=[a, b], x_au=[a_au, b_au])
     s2, s_au2 = pru.multiply(x=a, x_au=a_au, y=b, y_au=b_au)
     assert s1 == s2
     assert s_au1 == s_au2
