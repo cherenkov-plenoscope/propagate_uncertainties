@@ -90,7 +90,7 @@ def test_integrate_zero_1():
 
 
 def test_elementwise_add_zero_au():
-    s, s_au = pru.sum(x=([1, 1], [0, 0]))
+    s, s_au = pru.sum(x=[1, 1], x_au=[0, 0])
     assert s == 2
     assert s_au == 0
 
@@ -100,7 +100,7 @@ def test_elementwise_add_1():
     b = 2
     a_au = 0.2
     b_au = 0.55
-    s1, s_au1 = pru.sum(x=([a, b], [a_au, b_au]))
+    s1, s_au1 = pru.sum(x=[a, b], x_au=[a_au, b_au])
     s2, s_au2 = pru.add(x=a, x_au=a_au, y=b, y_au=b_au)
     assert s1 == s2
     assert s_au1 == s_au2

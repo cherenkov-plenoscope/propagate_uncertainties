@@ -170,21 +170,23 @@ def prod(x, x_au):
     return P, Pau
 
 
-def sum(x):
+def sum(x, x_au):
     """
     Add all elements in x
 
     Parameters
     ----------
-    x : tuple(array of floats, array of floats)
-        Values and absolute uncertainties of x
+    x : array of N floats
+        Values x.
+    x_au : array of N floats
+        Absolute uncertainties of x.
 
     Returns
     -------
     Sum and abs. uncertainty : tuple(float, float)
     """
-    x_au = np.array(x[1])
-    x = np.array(x[0])
+    x = np.array(x)
+    x_au = np.array(x_au)
     assert len(x) == len(x_au)
     S = np.sum(x)
     dfdxs = np.ones(len(x))
@@ -219,4 +221,4 @@ def integrate(f, x_bin_edges):
         step = x_bin_edges[i + 1] - x_bin_edges[i]
         assert step >= 0.0
         a[i], a_au[i] = multiply(x=f[i], x_au=f_au[i], y=step, y_au=0.0)
-    return sum((a, a_au))
+    return sum(x=a, x_au=a_au)
