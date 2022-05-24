@@ -194,14 +194,16 @@ def sum(x, x_au):
     return S, S_au
 
 
-def integrate(f, x_bin_edges):
+def integrate(f, f_au, x_bin_edges):
     """
     Integrate function f(x).
 
     Parameters
     ----------
-    f : tuple(array of floats, array of floats)
-        Values and absolute uncertainties of f(x)
+    f : array of N floats
+        Values of f(x).
+    f_au : array of N floats
+        Absolute uncertainties of f(x).
     x_bin_edges : array of floats
         Edges of bins in x.
 
@@ -209,8 +211,8 @@ def integrate(f, x_bin_edges):
     -------
     Integral and uncertainty : tuple(float, float)
     """
-    f_au = np.array(f[1])
-    f = np.array(f[0])
+    f = np.array(f)
+    f_au = np.array(f_au)
     num_bins = len(x_bin_edges) - 1
     assert len(f) == len(f_au)
     assert len(f) == num_bins
