@@ -75,7 +75,9 @@ def test_devide_2():
 
 
 def test_integrate_zero_au():
-    s, s_au = pru.integrate(f=[1, 1, 1], f_au=[0, 0, 0], x_bin_edges=[0, 1, 2, 3])
+    s, s_au = pru.integrate(
+        f=[1, 1, 1], f_au=[0, 0, 0], x_bin_edges=[0, 1, 2, 3]
+    )
     assert s == 3
     assert s_au == 0
 
@@ -84,7 +86,9 @@ def test_integrate_zero_1():
     a = 0.1
     b = 0.2
     c = 0.3
-    s, s_au = pru.integrate(f=[1, 1, 1], f_au=[a, b, c], x_bin_edges=[0, 1, 2, 3])
+    s, s_au = pru.integrate(
+        f=[1, 1, 1], f_au=[a, b, c], x_bin_edges=[0, 1, 2, 3]
+    )
     assert s == 3
     assert s_au == np.sqrt(a ** 2 + b ** 2 + c ** 2)
 

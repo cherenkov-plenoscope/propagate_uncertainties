@@ -131,12 +131,7 @@ def divide(x, x_au, y, y_au):
     """
     return (
         x / y,
-        au2(
-            x_au=x_au,
-            dfdx=1.0 / y,
-            y_au=y_au,
-            dfdy=(-1 * x * y ** (-2)),
-        ),
+        au2(x_au=x_au, dfdx=1.0 / y, y_au=y_au, dfdy=(-1 * x * y ** (-2)),),
     )
 
 
