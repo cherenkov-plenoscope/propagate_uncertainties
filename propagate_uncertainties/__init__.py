@@ -189,6 +189,46 @@ def sum(x, x_au):
     return S, S_au
 
 
+def sum_axis0(x, x_au):
+    """
+    Add all elements in x along an axis.
+
+    Parameters
+    ----------
+    x : array of (N, M) floats
+        Values x.
+    x_au : array of (N, M) floats
+        Absolute uncertainties of x.
+
+    Returns
+    -------
+    Sum and abs. uncertainty : tuple(array of M floats, array of M floats)
+    """
+    N = len(x)
+    assert N >= 1
+    assert N == len(x_au)
+    M = len(x[0])
+
+    # assert rectangular
+    for n in range(N):
+        assert M == len(x[n])
+        assert M == len(x_au[n])
+
+    s = tmp = np.zeros(M)
+    s_au = tmp = np.zeros(M)
+    for m in range(M):
+        tmp = np.zeros(N)
+        tmp_au = np.zeros(N)
+
+        for n in range(N):
+            tmp[n] = x[n][m]
+            tmp_au[n] = x_au[n][m]
+
+        s[m], s_au[m] = sum(x=tmp, x_au=tmp_au)
+
+    return s, s_au
+
+
 def integrate(f, f_au, x_bin_edges):
     """
     Integrate function f(x).

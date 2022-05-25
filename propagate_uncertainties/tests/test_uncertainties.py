@@ -125,3 +125,42 @@ def test_elementwise_multiply_1():
     s2, s_au2 = pru.multiply(x=a, x_au=a_au, y=b, y_au=b_au)
     assert s1 == s2
     assert s_au1 == s_au2
+
+
+def test_sum_axis0():
+    shape = (3, 25)
+
+    x = np.ones(shape)
+    x_au = 0.01 * np.ones(shape)
+
+    snp = np.sum(x, axis=0)
+    s, s_au = pru.sum_axis0(x=x, x_au=x_au)
+
+    assert s.shape == s_au.shape
+    assert s.shape == snp.shape
+    assert s.shape[0] == 25
+    assert s[0] == 3
+
+
+def test_sum_axis0_2():
+    x = [
+        [10, 10, 10, 10, 10, 10],
+        [10, 10, 10, 10, 10, 10],
+    ]
+    x_au = [
+        [0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+        [0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    ]
+    snp = np.sum(x, axis=0)
+    s, s_au = pru.sum_axis0(x=x, x_au=x_au)
+
+    assert s.shape == snp.shape
+    np.testing.assert_array_equal(s, snp)
+
+    assert s.shape == s_au.shape
+
+    assert s.shape[0] == 6
+    assert s[0] == 20.0
+    cs, cs_au = pru.sum(x=[10, 10], x_au=[0.1, 0.1])
+    assert s[0] == cs
+    assert s_au[0] == cs_au
