@@ -164,3 +164,21 @@ def test_sum_axis0_2():
     cs, cs_au = pru.sum(x=[10, 10], x_au=[0.1, 0.1])
     assert s[0] == cs
     assert s_au[0] == cs_au
+
+
+def test_sqrt():
+    s, s_au = pru.sqrt(x=4, x_au=0.0)
+    assert s == 2.0
+    assert s_au == 0.0
+
+
+def test_sqrt_1():
+    s, s_au = pru.sqrt(x=4, x_au=1.0)
+    assert s == 2.0
+    assert s_au == 0.25
+
+
+def test_sqrt_2():
+    s, s_au = pru.sqrt(x=4, x_au=4.0)
+    assert s == 2.0
+    assert s_au == 1.0

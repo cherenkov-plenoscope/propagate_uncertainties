@@ -259,3 +259,93 @@ def integrate(f, f_au, x_bin_edges):
         assert step >= 0.0
         a[i], a_au[i] = multiply(x=f[i], x_au=f_au[i], y=step, y_au=0.0)
     return sum(x=a, x_au=a_au)
+
+
+def sqrt(x, x_au):
+
+    """
+    ASquare root of x.
+
+    Parameters
+    ----------
+    x : float
+        Value of x.
+    x_au : float
+        Absolute uncertainty of x.
+
+    Returns
+    -------
+    x + y and absolute uncertainty : tuple(float, float)
+
+    Derivative
+    ----------
+    f(x) = x ** (1/2)
+    df/dx = (1/2) * x ** (-1/2)
+    """
+    return np.sqrt(x), auN(dfdx=[0.5 * x ** (-0.5)], x_au=[x_au])
+
+
+def max(x, x_au):
+    """
+    Find the max value in x.
+
+    Parameters
+    ----------
+    x : float
+        Value of x.
+    x_au : float
+        Absolute uncertainty of x.
+
+    Returns
+    -------
+    max(x) and corresponding x_au : (float, float)
+    """
+    am = np.argmax(x)
+    return x[am], x_au[am]
+
+
+def hypot(x, x_au, y, y_au):
+    """
+    Hypothenous of x and y.
+
+    Parameters
+    ----------
+    x : float
+        Value of x.
+    x_au : float
+        Absolute uncertainty of x.
+    y : float
+        Value of y.
+    y_au : float
+        Absolute uncertainty of y.
+
+    Returns
+    -------
+    sqrt(x**2 + y**2) and abs. uncertainty : tuple(float, float)
+
+    derivative
+    ----------
+    f(x, y) = (x^2 + y^2)^{1/2}
+
+    outer
+    g(w) = w^{1/2}
+    dg/dw = -1/2 w^{-1/2}
+
+    inner
+    u(x) = x^2 + y^2
+    du/dx = 2x
+    du/dy = 2y
+
+    df/dx = -1/2 (x^2 + y^2)^{-1/2} * 2x
+    df/dy = -1/2 (x^2 + y^2)^{-1/2} * 2y
+
+    df/dx = - x(x^2 + y^2)^{-1/2}
+    df/dy = - y(x^2 + y^2)^{-1/2}
+    """
+    dfdx = -x * (x ** 2 + y ** 2) ** (-1 / 2)
+    dfdy = -y * (x ** 2 + y ** 2) ** (-1 / 2)
+
+    return (
+        (x ** 2 + y ** 2) ** (1 / 2),
+        au2(x_au=x_au, dfdx=dfdx, y_au=y_au, dfdy=dfdy),
+    )
