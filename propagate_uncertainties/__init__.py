@@ -31,29 +31,6 @@ def auN(dfdx, x_au):
     return np.sqrt(S)
 
 
-def au2(x_au, dfdx, y_au, dfdy):
-    """
-    Estimate the absolute uncertainty of function f(x,y), assuming the
-    two parameters x and y are not correlated.
-
-    Parameters
-    ----------
-    x_au : float
-        Absolute uncertainty of x.
-    y_au : float
-        Absolute uncertainty of y.
-    dfdx : float
-        Derivative of f(x,y) w.r.t x, at (x,y).
-    dfdy : float
-        Derivative of f(x,y) w.r.t x, at (x,y).
-
-    Returns
-    -------
-    Absolute uncertainty : float
-    """
-    return auN(dfdx=[dfdx, dfdy], x_au=[x_au, y_au])
-
-
 def add(x, x_au, y, y_au):
     """
     Add x to y.
@@ -79,7 +56,9 @@ def add(x, x_au, y, y_au):
     df/dx = 1
     df/dy = 1
     """
-    return x + y, au2(x_au=x_au, dfdx=1.0, y_au=y_au, dfdy=1.0)
+    dfdx = 1.0
+    dfdy = 1.0
+    return x + y, auN(dfdx=[dfdx, dfdy], x_au=[x_au, y_au])
 
 
 def multiply(x, x_au, y, y_au):
@@ -107,7 +86,9 @@ def multiply(x, x_au, y, y_au):
     df/dx = y
     df/dy = x
     """
-    return x * y, au2(x_au=x_au, dfdx=y, y_au=y_au, dfdy=x)
+    dfdx = y
+    dfdy = x
+    return x * y, auN(dfdx=[dfdx, dfdy], x_au=[x_au, y_au])
 
 
 def divide(x, x_au, y, y_au):
@@ -132,13 +113,12 @@ def divide(x, x_au, y, y_au):
     derivative
     ----------
     f(x,y) = x * y^{-1}
-    df/dx = 1
+    df/dx = y^{-1}
     df/dy = -1x * y^{-2}
     """
-    return (
-        x / y,
-        au2(x_au=x_au, dfdx=1.0 / y, y_au=y_au, dfdy=(-1 * x * y ** (-2)),),
-    )
+    dfdx = y ** (-1)
+    dfdy = -1.0 * x * y ** (-2)
+    return x / y, auN(dfdx=[dfdx, dfdy], x_au=[x_au, y_au])
 
 
 def prod(x, x_au):
@@ -348,10 +328,9 @@ def hypot(x, x_au, y, y_au):
     df/dx = - x(x^2 + y^2)^{-1/2}
     df/dy = - y(x^2 + y^2)^{-1/2}
     """
-    dfdx = -x * (x ** 2 + y ** 2) ** (-1 / 2)
-    dfdy = -y * (x ** 2 + y ** 2) ** (-1 / 2)
+    Q = x ** 2 + y ** 2
 
-    return (
-        (x ** 2 + y ** 2) ** (1 / 2),
-        au2(x_au=x_au, dfdx=dfdx, y_au=y_au, dfdy=dfdy),
-    )
+    dfdx = -x * Q ** (-1 / 2)
+    dfdy = -y * Q ** (-1 / 2)
+
+    return Q ** (1 / 2), auN(dfdx=[dfdx, dfdy], x_au=[x_au, y_au])
