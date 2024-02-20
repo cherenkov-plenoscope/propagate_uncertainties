@@ -1,27 +1,31 @@
 import setuptools
+import os
 
-with open("README.rst", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+with open("README.rst", "r", encoding="utf-8") as f:
+    long_description = f.read()
+
+
+with open(os.path.join("propagate_uncertainties", "version.py")) as f:
+    txt = f.read()
+    last_line = txt.splitlines()[-1]
+    version_string = last_line.split()[-1]
+    version = version_string.strip("\"'")
+
 
 setuptools.setup(
     name="propagate_uncertainties_sebastian-achim-mueller",
-    version="0.2.4",
+    version=version,
     description="Propagate the uncertainty of multiple values",
     long_description=long_description,
     long_description_content_type="text/x-rst",
     url="https://github.com/cherenkov-plenoscope/propagate_uncertainties",
-    project_urls={
-        "Bug Tracker": (
-            "https://github.com/"
-            "cherenkov-plenoscope/propagate_uncertainties/issues"
-        ),
-    },
     author="Sebastian Achim Mueller",
     author_email="sebastian-achim.mueller@mpi-hd.mpg.de",
     packages=[
         "propagate_uncertainties",
     ],
     install_requires=[],
+    package_data={},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

@@ -1,6 +1,7 @@
+#######################
 Propagate Uncertainties
-=======================
-|BlackStyle|
+#######################
+|TestStatus| |PyPiStatus| |BlackStyle| |BlackPackStyle| |MITLicenseBadge|
 
 Propagate the uncertainties of your variables in simple expressions.
 
@@ -37,4 +38,16 @@ Functions
 
 
 .. |BlackStyle| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-   :target: https://github.com/psf/black
+    :target: https://github.com/psf/black
+
+.. |TestStatus| image:: https://github.com/cherenkov-plenoscope/propagate_uncertainties/actions/workflows/test.yml/badge.svg?branch=main
+    :target: https://github.com/cherenkov-plenoscope/propagate_uncertainties/actions/workflows/test.yml
+
+.. |PyPiStatus| image:: https://img.shields.io/pypi/v/propagate_uncertainties_sebastian-achim-mueller
+    :target: https://pypi.org/project/propagate_uncertainties_sebastian-achim-mueller
+
+.. |BlackPackStyle| image:: https://img.shields.io/badge/pack%20style-black-000000.svg
+    :target: https://github.com/cherenkov-plenoscope/black_pack
+
+.. |MITLicenseBadge| image:: https://img.shields.io/badge/License-MIT-yellow.svg
+    :target: https://opensource.org/licenses/MIT
