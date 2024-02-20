@@ -142,7 +142,7 @@ def prod(x, x_au):
     P = np.prod(x)
     dfdxs = []
     for i in range(len(x)):
-        mask_i = np.ones(len(x), dtype=np.bool)
+        mask_i = np.ones(len(x), dtype=bool)
         mask_i[i] = False
         dfdxi = np.prod(x[mask_i])
         dfdxs.append(dfdxi)
@@ -248,7 +248,6 @@ def integrate(f, f_au, x_bin_edges):
 
 
 def sqrt(x, x_au):
-
     """
     ASquare root of x.
 
@@ -328,7 +327,7 @@ def hypot(x, x_au, y, y_au):
     df/dx = - x(x^2 + y^2)^{-1/2}
     df/dy = - y(x^2 + y^2)^{-1/2}
     """
-    Q = x ** 2 + y ** 2
+    Q = x**2 + y**2
 
     dfdx = -x * Q ** (-1 / 2)
     dfdy = -y * Q ** (-1 / 2)

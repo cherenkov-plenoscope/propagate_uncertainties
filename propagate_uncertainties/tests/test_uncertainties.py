@@ -53,7 +53,7 @@ def test_multiply_3():
 def test_multiply_4():
     s, s_au = pru.multiply(x=1, x_au=1, y=10, y_au=1)
     assert s == 10
-    assert s_au == np.sqrt(1 ** 2 + 10 ** 2)
+    assert s_au == np.sqrt(1**2 + 10**2)
 
 
 def test_devide_zero_au():
@@ -71,7 +71,7 @@ def test_devide_1():
 def test_devide_2():
     s, s_au = pru.divide(x=7, x_au=1, y=2, y_au=1)
     assert s == 3.5
-    assert s_au == np.sqrt((1 / 2) ** 2 + (7 / 2 ** 2) ** 2)
+    assert s_au == np.sqrt((1 / 2) ** 2 + (7 / 2**2) ** 2)
 
 
 def test_integrate_zero_au():
@@ -90,7 +90,7 @@ def test_integrate_zero_1():
         f=[1, 1, 1], f_au=[a, b, c], x_bin_edges=[0, 1, 2, 3]
     )
     assert s == 3
-    assert s_au == np.sqrt(a ** 2 + b ** 2 + c ** 2)
+    assert s_au == np.sqrt(a**2 + b**2 + c**2)
 
 
 def test_elementwise_add_zero_au():
