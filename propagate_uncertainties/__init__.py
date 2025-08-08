@@ -4,6 +4,7 @@ Propagate Uncertainties
 
 Propagate the absolute uncertainties of your variables in simple expressions.
 """
+
 import numpy as np
 from .version import __version__
 
